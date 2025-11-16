@@ -1,136 +1,19 @@
 import React, { useState } from 'react';
+import { 
+  Container, 
+  Row, 
+  Col, 
+  Card, 
+  Button, 
+  Badge, 
+  InputGroup, 
+  FormControl, 
+  Navbar, 
+  Nav,
+  Carousel,
+  ListGroup
+} from 'react-bootstrap';
 import { ShoppingCart, Search, Heart, Star, Plus, Minus, Trash } from 'lucide-react';
-
-// Simulazione di React Bootstrap con Tailwind
-const Container = ({ children, fluid, className = '' }) => (
-  <div className={`${fluid ? 'w-full' : 'max-w-7xl'} mx-auto px-4 ${className}`}>
-    {children}
-  </div>
-);
-
-const Row = ({ children, className = '' }) => (
-  <div className={`flex flex-wrap -mx-2 ${className}`}>{children}</div>
-);
-
-const Col = ({ children, xs, sm, md, lg, className = '' }) => {
-  const getColClass = () => {
-    let classes = 'px-2 ';
-    if (xs) classes += `w-full `;
-    if (sm) classes += `sm:w-${12/sm}/12 `;
-    if (md) classes += `md:w-${12/md}/12 `;
-    if (lg) classes += `lg:w-${12/lg}/12 `;
-    return classes;
-  };
-  return <div className={`${getColClass()} ${className} mb-4`}>{children}</div>;
-};
-
-const Card = ({ children, className = '' }) => (
-  <div className={`bg-white rounded-lg shadow-md overflow-hidden ${className}`}>
-    {children}
-  </div>
-);
-
-const CardImg = ({ src, alt }) => (
-  <img src={src} alt={alt} className="w-full h-64 object-cover" />
-);
-
-const CardBody = ({ children, className = '' }) => (
-  <div className={`p-4 ${className}`}>{children}</div>
-);
-
-const Button = ({ children, variant = 'primary', size = 'md', onClick, className = '' }) => {
-  const variants = {
-    primary: 'bg-blue-600 hover:bg-blue-700 text-white',
-    warning: 'bg-yellow-400 hover:bg-yellow-500 text-gray-900',
-    danger: 'bg-red-600 hover:bg-red-700 text-white',
-    success: 'bg-green-600 hover:bg-green-700 text-white',
-    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-900',
-    outline: 'border-2 border-gray-300 hover:bg-gray-100 text-gray-700'
-  };
-  
-  const sizes = {
-    sm: 'px-3 py-1 text-sm',
-    md: 'px-4 py-2',
-    lg: 'px-6 py-3 text-lg'
-  };
-  
-  return (
-    <button 
-      onClick={onClick}
-      className={`${variants[variant]} ${sizes[size]} rounded font-semibold transition-all ${className}`}>
-      {children}
-    </button>
-  );
-};
-
-const Badge = ({ children, bg = 'primary', className = '' }) => {
-  const backgrounds = {
-    primary: 'bg-blue-600',
-    danger: 'bg-red-600',
-    warning: 'bg-yellow-500',
-    success: 'bg-green-600',
-    secondary: 'bg-gray-500'
-  };
-  
-  return (
-    <span className={`${backgrounds[bg]} text-white px-2 py-1 rounded-full text-xs font-semibold ${className}`}>
-      {children}
-    </span>
-  );
-};
-
-const InputGroup = ({ children, className = '' }) => (
-  <div className={`flex ${className}`}>{children}</div>
-);
-
-const FormControl = ({ placeholder, value, onChange, className = '' }) => (
-  <input
-    type="text"
-    placeholder={placeholder}
-    value={value}
-    onChange={onChange}
-    className={`flex-1 px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
-  />
-);
-
-const Navbar = ({ children, bg = 'dark', variant = 'dark', className = '' }) => (
-  <nav className={`${bg === 'dark' ? 'bg-gray-900' : 'bg-white'} ${variant === 'dark' ? 'text-white' : 'text-gray-900'} sticky top-0 z-50 shadow-lg ${className}`}>
-    {children}
-  </nav>
-);
-
-const Carousel = ({ children, className = '' }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const items = React.Children.toArray(children);
-  
-  return (
-    <div className={`relative ${className}`}>
-      {items[activeIndex]}
-      <button 
-        onClick={() => setActiveIndex((activeIndex - 1 + items.length) % items.length)}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full">
-        ←
-      </button>
-      <button 
-        onClick={() => setActiveIndex((activeIndex + 1) % items.length)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full">
-        →
-      </button>
-    </div>
-  );
-};
-
-const CarouselItem = ({ children, className = '' }) => (
-  <div className={className}>{children}</div>
-);
-
-const ListGroup = ({ children, className = '' }) => (
-  <div className={`border border-gray-200 rounded ${className}`}>{children}</div>
-);
-
-const ListGroupItem = ({ children, className = '' }) => (
-  <div className={`p-4 border-b last:border-b-0 ${className}`}>{children}</div>
-);
 
 const AmazonMockup = () => {
   const [currentPage, setCurrentPage] = useState('home');
@@ -236,148 +119,190 @@ const AmazonMockup = () => {
   };
 
   const Header = () => (
-    <Navbar bg="dark" variant="dark">
+    <Navbar bg="dark" variant="dark" sticky="top" expand="lg" className="shadow-lg">
       <Container fluid>
-        <div className="py-3">
-          <Row className="items-center">
-            <Col xs={12} md={2}>
-              <h1 
-                className="text-2xl font-bold cursor-pointer hover:text-orange-400 transition-colors"
-                onClick={() => setCurrentPage('home')}>
-                amazon
-              </h1>
-            </Col>
-            <Col xs={12} md={7}>
-              <InputGroup>
-                <FormControl
-                  placeholder="Cerca su Amazon"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="rounded-l"
-                />
-                <Button variant="warning" className="rounded-r rounded-l-none">
-                  <Search size={20} />
-                </Button>
-              </InputGroup>
-            </Col>
-            <Col xs={12} md={3} className="flex justify-end items-center gap-4">
-              <div className="text-sm">
-                <div>Ciao, Utente</div>
-                <div className="font-bold">Account & Liste</div>
+        <Navbar.Brand 
+          onClick={() => setCurrentPage('home')} 
+          style={{ cursor: 'pointer', fontSize: '1.8rem', fontWeight: 'bold' }}
+          className="text-warning">
+          amazon
+        </Navbar.Brand>
+        
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        
+        <Navbar.Collapse id="basic-navbar-nav">
+          <div className="mx-auto w-100" style={{ maxWidth: '600px' }}>
+            <InputGroup className="my-2 my-lg-0">
+              <FormControl
+                placeholder="Cerca su Amazon"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button variant="warning">
+                <Search size={20} />
+              </Button>
+            </InputGroup>
+          </div>
+          
+          <Nav className="ms-auto align-items-center">
+            <Nav.Link className="text-white">
+              <div className="d-flex flex-column" style={{ fontSize: '0.85rem' }}>
+                <span>Ciao, Utente</span>
+                <strong>Account & Liste</strong>
               </div>
-              <div 
-                className="relative cursor-pointer hover:text-orange-400 transition-colors"
-                onClick={() => setCurrentPage('cart')}>
-                <ShoppingCart size={32} />
-                {getTotalItems() > 0 && (
-                  <Badge bg="danger" className="absolute -top-2 -right-2">
-                    {getTotalItems()}
-                  </Badge>
-                )}
-              </div>
-            </Col>
-          </Row>
-        </div>
-        <div className="bg-gray-800 px-4 py-2 -mx-4 flex gap-6 text-sm">
-          <span className="cursor-pointer hover:text-orange-400">Offerte del giorno</span>
-          <span className="cursor-pointer hover:text-orange-400">Servizio Clienti</span>
-          <span className="cursor-pointer hover:text-orange-400">Lista desideri</span>
-          <span className="cursor-pointer hover:text-orange-400">Buoni Regalo</span>
-        </div>
+            </Nav.Link>
+            <Nav.Link 
+              onClick={() => setCurrentPage('cart')} 
+              className="position-relative text-white">
+              <ShoppingCart size={32} />
+              {getTotalItems() > 0 && (
+                <Badge 
+                  bg="danger" 
+                  pill 
+                  className="position-absolute top-0 start-100 translate-middle">
+                  {getTotalItems()}
+                </Badge>
+              )}
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
       </Container>
+      
+      <div className="bg-secondary py-2">
+        <Container fluid>
+          <Nav className="flex-row">
+            <Nav.Link className="text-white me-3">Offerte del giorno</Nav.Link>
+            <Nav.Link className="text-white me-3">Servizio Clienti</Nav.Link>
+            <Nav.Link className="text-white me-3">Lista desideri</Nav.Link>
+            <Nav.Link className="text-white">Buoni Regalo</Nav.Link>
+          </Nav>
+        </Container>
+      </div>
     </Navbar>
   );
 
   const HomePage = () => (
-    <div className="min-h-screen bg-gray-100">
+    <div style={{ backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
       <Carousel className="mb-4">
-        <CarouselItem>
-          <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 h-96 flex items-center justify-center">
-            <div className="absolute inset-0 bg-black opacity-20"></div>
-            <div className="relative z-10 text-center text-white px-4">
-              <h2 className="text-5xl font-bold mb-4">Le migliori offerte tech</h2>
-              <p className="text-xl mb-6">Scopri i prodotti più innovativi</p>
+        <Carousel.Item>
+          <div 
+            className="d-flex align-items-center justify-content-center text-white"
+            style={{ 
+              height: '400px', 
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            }}>
+            <div className="text-center">
+              <h2 className="display-4 fw-bold mb-3">Le migliori offerte tech</h2>
+              <p className="fs-4 mb-4">Scopri i prodotti più innovativi</p>
               <Button variant="warning" size="lg">Acquista ora</Button>
             </div>
           </div>
-        </CarouselItem>
-        <CarouselItem>
-          <div className="relative bg-gradient-to-r from-orange-500 to-red-600 h-96 flex items-center justify-center">
-            <div className="absolute inset-0 bg-black opacity-20"></div>
-            <div className="relative z-10 text-center text-white px-4">
-              <h2 className="text-5xl font-bold mb-4">Elettronica di qualità</h2>
-              <p className="text-xl mb-6">Spedizione gratuita su migliaia di prodotti</p>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div 
+            className="d-flex align-items-center justify-content-center text-white"
+            style={{ 
+              height: '400px', 
+              background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+            }}>
+            <div className="text-center">
+              <h2 className="display-4 fw-bold mb-3">Elettronica di qualità</h2>
+              <p className="fs-4 mb-4">Spedizione gratuita su migliaia di prodotti</p>
               <Button variant="warning" size="lg">Esplora</Button>
             </div>
           </div>
-        </CarouselItem>
+        </Carousel.Item>
       </Carousel>
 
       <Container className="py-4">
-        <Row>
-          <Col xs={12} md={4}>
-            <Card className="hover:shadow-xl transition-shadow">
-              <CardBody>
-                <h3 className="text-xl font-bold mb-2">Elettronica</h3>
-                <p className="text-gray-600 mb-4">Scopri i dispositivi più recenti</p>
-                <img 
+        <Row className="mb-4">
+          <Col xs={12} md={4} className="mb-3">
+            <Card className="h-100 shadow-sm">
+              <Card.Body>
+                <Card.Title>Elettronica</Card.Title>
+                <Card.Text className="text-muted">
+                  Scopri i dispositivi più recenti
+                </Card.Text>
+                <Card.Img 
                   src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400&h=200&fit=crop" 
-                  alt="Elettronica" 
-                  className="w-full h-40 object-cover rounded mb-3" 
+                  style={{ height: '150px', objectFit: 'cover' }}
+                  className="rounded"
                 />
-                <Button variant="outline" size="sm" className="w-full">Vedi altro</Button>
-              </CardBody>
+                <Button variant="outline-secondary" size="sm" className="w-100 mt-3">
+                  Vedi altro
+                </Button>
+              </Card.Body>
             </Card>
           </Col>
-          <Col xs={12} md={4}>
-            <Card className="hover:shadow-xl transition-shadow">
-              <CardBody>
-                <h3 className="text-xl font-bold mb-2">Audio & Video</h3>
-                <p className="text-gray-600 mb-4">Suono e immagini di qualità</p>
-                <img 
+          <Col xs={12} md={4} className="mb-3">
+            <Card className="h-100 shadow-sm">
+              <Card.Body>
+                <Card.Title>Audio & Video</Card.Title>
+                <Card.Text className="text-muted">
+                  Suono e immagini di qualità
+                </Card.Text>
+                <Card.Img 
                   src="https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400&h=200&fit=crop" 
-                  alt="Audio" 
-                  className="w-full h-40 object-cover rounded mb-3" 
+                  style={{ height: '150px', objectFit: 'cover' }}
+                  className="rounded"
                 />
-                <Button variant="outline" size="sm" className="w-full">Vedi altro</Button>
-              </CardBody>
+                <Button variant="outline-secondary" size="sm" className="w-100 mt-3">
+                  Vedi altro
+                </Button>
+              </Card.Body>
             </Card>
           </Col>
-          <Col xs={12} md={4}>
-            <Card className="hover:shadow-xl transition-shadow">
-              <CardBody>
-                <h3 className="text-xl font-bold mb-2">Smart Home</h3>
-                <p className="text-gray-600 mb-4">Rendi la tua casa intelligente</p>
-                <img 
+          <Col xs={12} md={4} className="mb-3">
+            <Card className="h-100 shadow-sm">
+              <Card.Body>
+                <Card.Title>Smart Home</Card.Title>
+                <Card.Text className="text-muted">
+                  Rendi la tua casa intelligente
+                </Card.Text>
+                <Card.Img 
                   src="https://images.unsplash.com/photo-1558002038-1055907df827?w=400&h=200&fit=crop" 
-                  alt="Smart Home" 
-                  className="w-full h-40 object-cover rounded mb-3" 
+                  style={{ height: '150px', objectFit: 'cover' }}
+                  className="rounded"
                 />
-                <Button variant="outline" size="sm" className="w-full">Vedi altro</Button>
-              </CardBody>
+                <Button variant="outline-secondary" size="sm" className="w-100 mt-3">
+                  Vedi altro
+                </Button>
+              </Card.Body>
             </Card>
           </Col>
         </Row>
 
-        <h2 className="text-3xl font-bold my-6">Prodotti in evidenza</h2>
+        <h2 className="mb-4">Prodotti in evidenza</h2>
         <Row>
           {products.map(product => (
-            <Col key={product.id} xs={12} sm={6} lg={4}>
-              <Card className="hover:shadow-xl transition-all transform hover:-translate-y-1 h-full">
-                <div className="relative">
-                  <CardImg src={product.image} alt={product.name} />
-                  <Badge bg="warning" className="absolute top-4 left-4">
+            <Col key={product.id} xs={12} sm={6} lg={4} className="mb-4">
+              <Card className="h-100 shadow-sm hover-shadow">
+                <div className="position-relative">
+                  <Card.Img 
+                    variant="top" 
+                    src={product.image} 
+                    style={{ height: '250px', objectFit: 'cover' }}
+                  />
+                  <Badge 
+                    bg="warning" 
+                    text="dark"
+                    className="position-absolute top-0 start-0 m-2">
                     {product.badge}
                   </Badge>
-                  <button className="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-red-50">
-                    <Heart size={20} className="text-gray-600 hover:text-red-500" />
-                  </button>
+                  <Button 
+                    variant="light" 
+                    className="position-absolute top-0 end-0 m-2 rounded-circle"
+                    style={{ width: '40px', height: '40px', padding: 0 }}>
+                    <Heart size={20} />
+                  </Button>
                 </div>
-                <CardBody>
-                  <Badge bg="secondary" className="mb-2">{product.category}</Badge>
-                  <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="flex text-yellow-400">
+                <Card.Body className="d-flex flex-column">
+                  <Badge bg="secondary" className="align-self-start mb-2">
+                    {product.category}
+                  </Badge>
+                  <Card.Title className="fs-6">{product.name}</Card.Title>
+                  <div className="d-flex align-items-center mb-2">
+                    <div className="text-warning d-flex">
                       {[...Array(5)].map((_, i) => (
                         <Star 
                           key={i} 
@@ -386,17 +311,17 @@ const AmazonMockup = () => {
                         />
                       ))}
                     </div>
-                    <span className="text-sm text-gray-600">({product.reviews})</span>
+                    <small className="text-muted ms-2">({product.reviews})</small>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-orange-600">€{product.price}</span>
-                    <Button
-                      variant="warning"
+                  <div className="d-flex justify-content-between align-items-center mt-auto">
+                    <span className="fs-4 fw-bold text-danger">€{product.price}</span>
+                    <Button 
+                      variant="warning" 
                       onClick={() => addToCart(product)}>
                       Aggiungi
                     </Button>
                   </div>
-                </CardBody>
+                </Card.Body>
               </Card>
             </Col>
           ))}
@@ -406,102 +331,108 @@ const AmazonMockup = () => {
   );
 
   const CartPage = () => (
-    <div className="min-h-screen bg-gray-100">
+    <div style={{ backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
       <Container className="py-4">
-        <h1 className="text-3xl font-bold mb-4">Carrello della spesa</h1>
+        <h1 className="mb-4">Carrello della spesa</h1>
         
         {cart.length === 0 ? (
           <Card>
-            <CardBody className="text-center py-12">
-              <ShoppingCart size={64} className="mx-auto text-gray-300 mb-4" />
-              <h2 className="text-2xl font-semibold mb-2">Il tuo carrello è vuoto</h2>
-              <p className="text-gray-600 mb-4">Aggiungi prodotti per iniziare lo shopping!</p>
-              <Button variant="warning" size="lg" onClick={() => setCurrentPage('home')}>
+            <Card.Body className="text-center py-5">
+              <ShoppingCart size={64} className="text-muted mb-3" />
+              <h2>Il tuo carrello è vuoto</h2>
+              <p className="text-muted mb-4">Aggiungi prodotti per iniziare lo shopping!</p>
+              <Button 
+                variant="warning" 
+                size="lg" 
+                onClick={() => setCurrentPage('home')}>
                 Continua lo shopping
               </Button>
-            </CardBody>
+            </Card.Body>
           </Card>
         ) : (
           <Row>
-            <Col xs={12} lg={8}>
-              <Card className="mb-4">
-                <CardBody>
-                  <ListGroup>
-                    {cart.map(item => (
-                      <ListGroupItem key={item.id}>
-                        <Row className="items-center">
-                          <Col xs={12} sm={3}>
-                            <img src={item.image} alt={item.name} className="w-full rounded" />
-                          </Col>
-                          <Col xs={12} sm={5}>
-                            <h4 className="font-semibold mb-2">{item.name}</h4>
-                            <Badge bg="success" className="mb-2">Disponibile</Badge>
-                            <div className="flex items-center gap-2">
-                              <Button 
-                                variant="secondary" 
-                                size="sm"
-                                onClick={() => updateQuantity(item.id, -1)}>
-                                <Minus size={16} />
-                              </Button>
-                              <span className="font-semibold px-3">{item.quantity}</span>
-                              <Button 
-                                variant="secondary" 
-                                size="sm"
-                                onClick={() => updateQuantity(item.id, 1)}>
-                                <Plus size={16} />
-                              </Button>
-                              <Button 
-                                variant="danger" 
-                                size="sm"
-                                onClick={() => removeFromCart(item.id)}
-                                className="ml-2">
-                                <Trash size={16} />
-                              </Button>
-                            </div>
-                          </Col>
-                          <Col xs={12} sm={4} className="text-right">
-                            <div className="text-2xl font-bold text-orange-600">
-                              €{(item.price * item.quantity).toFixed(2)}
-                            </div>
-                            <div className="text-sm text-gray-500">€{item.price} cad.</div>
-                          </Col>
-                        </Row>
-                      </ListGroupItem>
-                    ))}
-                  </ListGroup>
-                </CardBody>
+            <Col xs={12} lg={8} className="mb-4">
+              <Card>
+                <ListGroup variant="flush">
+                  {cart.map(item => (
+                    <ListGroup.Item key={item.id}>
+                      <Row className="align-items-center">
+                        <Col xs={12} sm={3} className="mb-3 mb-sm-0">
+                          <img 
+                            src={item.image} 
+                            alt={item.name} 
+                            className="img-fluid rounded"
+                          />
+                        </Col>
+                        <Col xs={12} sm={5} className="mb-3 mb-sm-0">
+                          <h5>{item.name}</h5>
+                          <Badge bg="success" className="mb-2">Disponibile</Badge>
+                          <div className="d-flex align-items-center gap-2">
+                            <Button 
+                              variant="secondary" 
+                              size="sm"
+                              onClick={() => updateQuantity(item.id, -1)}>
+                              <Minus size={16} />
+                            </Button>
+                            <span className="fw-bold px-3">{item.quantity}</span>
+                            <Button 
+                              variant="secondary" 
+                              size="sm"
+                              onClick={() => updateQuantity(item.id, 1)}>
+                              <Plus size={16} />
+                            </Button>
+                            <Button 
+                              variant="danger" 
+                              size="sm"
+                              onClick={() => removeFromCart(item.id)}
+                              className="ms-2">
+                              <Trash size={16} />
+                            </Button>
+                          </div>
+                        </Col>
+                        <Col xs={12} sm={4} className="text-sm-end">
+                          <div className="fs-4 fw-bold text-danger">
+                            €{(item.price * item.quantity).toFixed(2)}
+                          </div>
+                          <small className="text-muted">€{item.price} cad.</small>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
               </Card>
             </Col>
 
             <Col xs={12} lg={4}>
-              <Card className="sticky top-24">
-                <CardBody>
-                  <h3 className="text-xl font-bold mb-4">Riepilogo ordine</h3>
-                  <ListGroup className="mb-4">
-                    <ListGroupItem className="flex justify-between">
+              <Card className="sticky-top" style={{ top: '100px' }}>
+                <Card.Body>
+                  <Card.Title>Riepilogo ordine</Card.Title>
+                  <ListGroup variant="flush" className="mb-3">
+                    <ListGroup.Item className="d-flex justify-content-between">
                       <span>Articoli ({getTotalItems()}):</span>
-                      <span className="font-semibold">€{getTotalPrice()}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="flex justify-between">
+                      <span className="fw-semibold">€{getTotalPrice()}</span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="d-flex justify-content-between">
                       <span>Spedizione:</span>
                       <Badge bg="success">GRATIS</Badge>
-                    </ListGroupItem>
-                    <ListGroupItem className="flex justify-between">
-                      <span className="font-bold text-lg">Totale:</span>
-                      <span className="font-bold text-lg text-orange-600">€{getTotalPrice()}</span>
-                    </ListGroupItem>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="d-flex justify-content-between">
+                      <span className="fw-bold fs-5">Totale:</span>
+                      <span className="fw-bold fs-5 text-danger">€{getTotalPrice()}</span>
+                    </ListGroup.Item>
                   </ListGroup>
-                  <Button variant="warning" size="lg" className="w-full mb-2">
-                    Procedi all'acquisto
-                  </Button>
-                  <Button 
-                    variant="secondary" 
-                    size="lg" 
-                    className="w-full"
-                    onClick={() => setCurrentPage('home')}>
-                    Continua lo shopping
-                  </Button>
-                </CardBody>
+                  <div className="d-grid gap-2">
+                    <Button variant="warning" size="lg">
+                      Procedi all'acquisto
+                    </Button>
+                    <Button 
+                      variant="secondary" 
+                      size="lg"
+                      onClick={() => setCurrentPage('home')}>
+                      Continua lo shopping
+                    </Button>
+                  </div>
+                </Card.Body>
               </Card>
             </Col>
           </Row>
@@ -511,10 +442,10 @@ const AmazonMockup = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <>
       <Header />
       {currentPage === 'home' ? <HomePage /> : <CartPage />}
-    </div>
+    </>
   );
 };
 
