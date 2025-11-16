@@ -13,6 +13,7 @@ import {
   Carousel,
   ListGroup
 } from 'react-bootstrap';
+import FoodPage from './FoodPage.jsx';
 import { ShoppingCart, Search, Heart, Star, Plus, Minus, Trash } from 'lucide-react';
 
 const AmazonMockup = () => {
@@ -80,6 +81,36 @@ const AmazonMockup = () => {
       reviews: 756,
       category: "Audio",
       badge: "Bestseller"
+    },
+    {
+      id: 7,
+      name: "Caffè Biologico 1kg",
+      price: 24.99,
+      image: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=400&h=400&fit=crop",
+      rating: 4.8,
+      reviews: 876,
+      category: "Alimentari",
+      badge: "Biologico"
+    },
+    {
+      id: 8,
+      name: "Pasta Artigianale 500g",
+      price: 4.99,
+      image: "https://images.unsplash.com/photo-1621996346565-e326e2021e3a?w=400&h=400&fit=crop",
+      rating: 4.9,
+      reviews: 1203,
+      category: "Alimentari",
+      badge: "Artigianale"
+    },
+    {
+      id: 9,
+      name: "Olio Extra Vergine d'Oliva",
+      price: 12.99,
+      image: "https://images.unsplash.com/photo-1626201469212-2a24a2a05454?w=400&h=400&fit=crop",
+      rating: 4.7,
+      reviews: 654,
+      category: "Alimentari",
+      badge: "Novità"
     }
   ];
 
@@ -174,6 +205,7 @@ const AmazonMockup = () => {
             <Nav.Link className="text-white me-3">Offerte del giorno</Nav.Link>
             <Nav.Link className="text-white me-3">Servizio Clienti</Nav.Link>
             <Nav.Link className="text-white me-3">Lista desideri</Nav.Link>
+            <Nav.Link className="text-white me-3" onClick={() => setCurrentPage('food')}>Alimentari</Nav.Link>
             <Nav.Link className="text-white">Buoni Regalo</Nav.Link>
           </Nav>
         </Container>
@@ -274,7 +306,7 @@ const AmazonMockup = () => {
 
         <h2 className="mb-4">Prodotti in evidenza</h2>
         <Row>
-          {products.map(product => (
+          {products.filter(p => p.category !== 'Alimentari').map(product => (
             <Col key={product.id} xs={12} sm={6} lg={4} className="mb-4">
               <Card className="h-100 shadow-sm hover-shadow">
                 <div className="position-relative">
@@ -441,10 +473,21 @@ const AmazonMockup = () => {
     </div>
   );
 
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'cart':
+        return <CartPage />;
+      case 'food':
+        return <FoodPage products={products} addToCart={addToCart} />;
+      default:
+        return <HomePage />;
+    }
+  };
+
   return (
     <>
       <Header />
-      {currentPage === 'home' ? <HomePage /> : <CartPage />}
+      {renderPage()}
     </>
   );
 };
