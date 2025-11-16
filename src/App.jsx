@@ -11,10 +11,15 @@ import {
   Navbar, 
   Nav,
   Carousel,
-  ListGroup
+  ListGroup,
+  Dropdown
 } from 'react-bootstrap';
-import FoodPage from './FoodPage.jsx';
-import { ShoppingCart, Search, Heart, Star, Plus, Minus, Trash } from 'lucide-react';
+import FoodPage from './pages/FoodPage.jsx';
+import OfferteDelGiorno from './pages/OfferteDelGiorno.jsx';
+import ServizioClienti from './pages/ServizioClienti.jsx';
+import ListaDesideri from './pages/ListaDesideri.jsx';
+import BuoniRegalo from './pages/BuoniRegalo.jsx';
+import { ShoppingCart, Search, Heart, Star, Plus, Minus, Trash, User, Menu } from 'lucide-react';
 
 const AmazonMockup = () => {
   const [currentPage, setCurrentPage] = useState('home');
@@ -150,67 +155,82 @@ const AmazonMockup = () => {
   };
 
   const Header = () => (
-    <Navbar bg="dark" variant="dark" sticky="top" expand="lg" className="shadow-lg">
-      <Container fluid>
-        <Navbar.Brand 
-          onClick={() => setCurrentPage('home')} 
-          style={{ cursor: 'pointer', fontSize: '1.8rem', fontWeight: 'bold' }}
-          className="text-warning">
-          amazon
-        </Navbar.Brand>
-        
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        
-        <Navbar.Collapse id="basic-navbar-nav">
-          <div className="mx-auto w-100" style={{ maxWidth: '600px' }}>
-            <InputGroup className="my-2 my-lg-0">
-              <FormControl
-                placeholder="Cerca su Amazon"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Button variant="warning">
-                <Search size={20} />
-              </Button>
-            </InputGroup>
-          </div>
-          
-          <Nav className="ms-auto align-items-center">
-            <Nav.Link className="text-white">
-              <div className="d-flex flex-column" style={{ fontSize: '0.85rem' }}>
-                <span>Ciao, Utente</span>
-                <strong>Account & Liste</strong>
-              </div>
-            </Nav.Link>
-            <Nav.Link 
-              onClick={() => setCurrentPage('cart')} 
-              className="position-relative text-white">
-              <ShoppingCart size={32} />
-              {getTotalItems() > 0 && (
-                <Badge 
-                  bg="danger" 
-                  pill 
-                  className="position-absolute top-0 start-100 translate-middle">
-                  {getTotalItems()}
-                </Badge>
-              )}
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-      
-      <div className="bg-secondary py-2">
+    <header>
+      <Navbar bg="dark" variant="dark" expand="lg" className="px-3 shadow-sm">
         <Container fluid>
-          <Nav className="flex-row">
-            <Nav.Link className="text-white me-3">Offerte del giorno</Nav.Link>
-            <Nav.Link className="text-white me-3">Servizio Clienti</Nav.Link>
-            <Nav.Link className="text-white me-3">Lista desideri</Nav.Link>
-            <Nav.Link className="text-white me-3" onClick={() => setCurrentPage('food')}>Alimentari</Nav.Link>
-            <Nav.Link className="text-white">Buoni Regalo</Nav.Link>
+          <Navbar.Brand 
+            onClick={() => setCurrentPage('home')} 
+            style={{ cursor: 'pointer', fontSize: '1.8rem', fontWeight: 'bold', color: '#FF9900' }}>
+            amazon
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <div className="mx-auto w-100 px-lg-5">
+              <InputGroup>
+                <FormControl
+                  placeholder="Cerca su Amazon.it"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{ borderRight: 'none' }}
+                />
+                <Button variant="warning" style={{ backgroundColor: '#FF9900', borderColor: '#FF9900' }}>
+                  <Search size={20} />
+                </Button>
+              </InputGroup>
+            </div>
+            <Nav className="ms-auto align-items-center">
+              <Dropdown as={Nav.Item}>
+                <Dropdown.Toggle as={Nav.Link} className="text-white d-flex align-items-center">
+                  <User className="me-2" />
+                  <div>
+                    <span style={{ fontSize: '0.8rem' }}>Ciao, Utente</span>
+                    <strong style={{ display: 'block', lineHeight: 1 }}>Account & Liste</strong>
+                  </div>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item>Il mio account</Dropdown.Item>
+                  <Dropdown.Item>I miei ordini</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setCurrentPage('lista-desideri')}>La mia lista desideri</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item>Esci</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              <Nav.Link 
+                onClick={() => setCurrentPage('cart')} 
+                className="position-relative text-white d-flex align-items-center ms-lg-3">
+                <ShoppingCart size={32} />
+                <div className="ms-2">
+                  <span style={{ fontSize: '0.8rem' }}>Carrello</span>
+                  {getTotalItems() > 0 && (
+                    <Badge 
+                      bg="warning" 
+                      text="dark"
+                      pill>
+                      {getTotalItems()}
+                    </Badge>
+                  )}
+                </div>
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Navbar bg="light" expand="lg" className="px-3 border-bottom">
+        <Container fluid>
+          <Nav>
+            <Nav.Link onClick={() => setCurrentPage('offerte')}>
+              <Menu size={20} className="me-1" />
+              Tutte le categorie
+            </Nav.Link>
+            <Nav.Link onClick={() => setCurrentPage('offerte')}>Offerte del giorno</Nav.Link>
+            <Nav.Link onClick={() => setCurrentPage('food')}>Alimentari</Nav.Link>
+            <Nav.Link onClick={() => setCurrentPage('servizio-clienti')}>Servizio Clienti</Nav.Link>
+            <Nav.Link onClick={() => setCurrentPage('lista-desideri')}>Lista desideri</Nav.Link>
+            <Nav.Link onClick={() => setCurrentPage('buoni-regalo')}>Buoni Regalo</Nav.Link>
           </Nav>
         </Container>
-      </div>
-    </Navbar>
+      </Navbar>
+    </header>
   );
 
   const HomePage = () => (
@@ -479,6 +499,14 @@ const AmazonMockup = () => {
         return <CartPage />;
       case 'food':
         return <FoodPage products={products} addToCart={addToCart} />;
+      case 'offerte':
+        return <OfferteDelGiorno />;
+      case 'servizio-clienti':
+        return <ServizioClienti />;
+      case 'lista-desideri':
+        return <ListaDesideri />;
+      case 'buoni-regalo':
+        return <BuoniRegalo />;
       default:
         return <HomePage />;
     }
