@@ -116,6 +116,86 @@ const AmazonMockup = () => {
       reviews: 654,
       category: "Alimentari",
       badge: "Novità"
+    },
+    {
+      id: 10,
+      name: "Buono Regalo Digitale",
+      price: 50.00,
+      image: "https://images.unsplash.com/photo-1512910592213-7235f036855a?w=400&h=400&fit=crop",
+      rating: 5.0,
+      reviews: 1500,
+      category: "Buoni Regalo",
+      badge: "Digitale"
+    },
+    {
+      id: 11,
+      name: "Buono Regalo Cartaceo",
+      price: 100.00,
+      image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=400&h=400&fit=crop",
+      rating: 4.9,
+      reviews: 750,
+      category: "Buoni Regalo",
+      badge: "Cartaceo"
+    },
+    {
+      id: 12,
+      name: "Libro Best-Seller",
+      price: 19.99,
+      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop",
+      rating: 4.8,
+      reviews: 2500,
+      category: "Lista dei desideri",
+      badge: "Top Seller"
+    },
+    {
+      id: 13,
+      name: "Set di Tazze da Caffè",
+      price: 29.99,
+      image: "https://images.unsplash.com/photo-1593168849065-a6a43686f13a?w=400&h=400&fit=crop",
+      rating: 4.7,
+      reviews: 800,
+      category: "Lista dei desideri",
+      badge: "Idea Regalo"
+    },
+    {
+      id: 14,
+      name: "Robot da Cucina",
+      price: 149.99,
+      image: "https://images.unsplash.com/photo-1587813369290-b968a5a18373?w=400&h=400&fit=crop",
+      rating: 4.6,
+      reviews: 950,
+      category: "Offerte",
+      badge: "Offerta Speciale"
+    },
+    {
+      id: 15,
+      name: "Friggitrice ad Aria",
+      price: 89.99,
+      image: "https://images.unsplash.com/photo-1605298710099-ea4e5a8a526b?w=400&h=400&fit=crop",
+      rating: 4.8,
+      reviews: 1200,
+      category: "Offerte",
+      badge: "Super Offerta"
+    },
+    {
+      id: 16,
+      name: "Supporto per Laptop",
+      price: 29.99,
+      image: "https://images.unsplash.com/photo-1593642702821-c83b7918c931?w=400&h=400&fit=crop",
+      rating: 4.7,
+      reviews: 1100,
+      category: "Servizio Clienti",
+      badge: "Consigliato"
+    },
+    {
+      id: 17,
+      name: "Webcam HD",
+      price: 49.99,
+      image: "https://images.unsplash.com/photo-1611219446036-5a8f1f9b3b1a?w=400&h=400&fit=crop",
+      rating: 4.5,
+      reviews: 900,
+      category: "Servizio Clienti",
+      badge: "Più Venduto"
     }
   ];
 
@@ -165,7 +245,7 @@ const AmazonMockup = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <div className="mx-auto w-100 px-lg-5">
+            <div className="mx-auto w-50 px-lg-5">
               <InputGroup>
                 <FormControl
                   placeholder="Cerca su Amazon.it"
@@ -179,6 +259,16 @@ const AmazonMockup = () => {
               </InputGroup>
             </div>
             <Nav className="ms-auto align-items-center">
+              <Dropdown as={Nav.Item}>
+                <Dropdown.Toggle as={Nav.Link}>Categorie</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => setCurrentPage('food')}>Alimentari</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setCurrentPage('offerte')}>Offerte del giorno</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setCurrentPage('lista-desideri')}>Lista desideri</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setCurrentPage('buoni-regalo')}>Buoni Regalo</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setCurrentPage('servizio-clienti')}>Servizio Clienti</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               <Dropdown as={Nav.Item}>
                 <Dropdown.Toggle as={Nav.Link} className="text-white d-flex align-items-center">
                   <User className="me-2" />
@@ -213,21 +303,6 @@ const AmazonMockup = () => {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      <Navbar bg="light" expand="lg" className="px-3 border-bottom">
-        <Container fluid>
-          <Nav>
-            <Nav.Link onClick={() => setCurrentPage('offerte')}>
-              <Menu size={20} className="me-1" />
-              Tutte le categorie
-            </Nav.Link>
-            <Nav.Link onClick={() => setCurrentPage('offerte')}>Offerte del giorno</Nav.Link>
-            <Nav.Link onClick={() => setCurrentPage('food')}>Alimentari</Nav.Link>
-            <Nav.Link onClick={() => setCurrentPage('servizio-clienti')}>Servizio Clienti</Nav.Link>
-            <Nav.Link onClick={() => setCurrentPage('lista-desideri')}>Lista desideri</Nav.Link>
-            <Nav.Link onClick={() => setCurrentPage('buoni-regalo')}>Buoni Regalo</Nav.Link>
-          </Nav>
         </Container>
       </Navbar>
     </header>
@@ -500,13 +575,13 @@ const AmazonMockup = () => {
       case 'food':
         return <FoodPage products={products} addToCart={addToCart} />;
       case 'offerte':
-        return <OfferteDelGiorno />;
+        return <OfferteDelGiorno products={products} addToCart={addToCart} />;
       case 'servizio-clienti':
-        return <ServizioClienti />;
+        return <ServizioClienti products={products} addToCart={addToCart} />;
       case 'lista-desideri':
-        return <ListaDesideri />;
+        return <ListaDesideri products={products} addToCart={addToCart} />;
       case 'buoni-regalo':
-        return <BuoniRegalo />;
+        return <BuoniRegalo products={products} addToCart={addToCart} />;
       default:
         return <HomePage />;
     }
