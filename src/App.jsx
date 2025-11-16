@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingCart, Search, Heart, Star, Plus, Dash, Trash } from 'lucide-react';
+import { ShoppingCart, Search, Heart, Star, Plus, Minus, Trash } from 'lucide-react';
 
 // Simulazione di React Bootstrap con Tailwind
 const Container = ({ children, fluid, className = '' }) => (
@@ -441,7 +441,7 @@ const AmazonMockup = () => {
                                 variant="secondary" 
                                 size="sm"
                                 onClick={() => updateQuantity(item.id, -1)}>
-                                <Dash size={16} />
+                                <Minus size={16} />
                               </Button>
                               <span className="font-semibold px-3">{item.quantity}</span>
                               <Button 
